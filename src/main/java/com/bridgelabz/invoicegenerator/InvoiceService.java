@@ -1,10 +1,15 @@
 package com.bridgelabz.invoicegenerator;
 
-public class InvoiceGenerator {
+public class InvoiceService {
 
 	private static final double FARE_PER_KM = 10.0;
 	private static final double FARE_PER_MIN = 1.0;
 	private static final double MINIMUM_FARE = 5;
+	private RideRepository rideRepository;
+
+	public InvoiceService() {
+		rideRepository = new RideRepository();
+	}
 
 	public static double calculateFare(double distance, double time) {
 		double fare = distance * FARE_PER_KM + time * FARE_PER_MIN;
@@ -20,6 +25,14 @@ public class InvoiceGenerator {
 		for (Ride ride : rides)
 			totalFare += this.calculateFare(ride.distance, ride.time);
 		return new InvoiceSummary(rides.length, totalFare);
+	}
+
+	public InvoiceSummary getInvoiceSummary(String userId) {
+		return calculateFare(rideRepository.getUserRides(userId));
+	}
+
+	public void addRides(String userId, Ride[] rides) {
+		rideRepository.addUserRide(userId, rides);
 	}
 
 }
