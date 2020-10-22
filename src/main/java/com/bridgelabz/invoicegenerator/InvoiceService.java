@@ -7,11 +7,11 @@ public class InvoiceService {
 	private static final double MINIMUM_FARE = 5;
 	private RideRepository rideRepository;
 
-	public InvoiceService() {
-		rideRepository = new RideRepository();
+	public void setRideRepository(RideRepository rideRepository) {
+		this.rideRepository = rideRepository;
 	}
 
-	public static double calculateFare(double distance, double time) {
+	public static double calculateFarePerRide(double distance, double time) {
 		double fare = distance * FARE_PER_KM + time * FARE_PER_MIN;
 		if (fare > MINIMUM_FARE)
 			return fare;
@@ -21,9 +21,8 @@ public class InvoiceService {
 
 	public InvoiceSummary calculateFare(Ride[] rides) {
 		double totalFare = 0;
-		double avFare = 0;
 		for (Ride ride : rides)
-			totalFare += this.calculateFare(ride.distance, ride.time);
+			totalFare += ride.cabRideType.calculateFarePerRide(ride.distance, ride.timeInMinute);
 		return new InvoiceSummary(rides.length, totalFare);
 	}
 
@@ -34,5 +33,4 @@ public class InvoiceService {
 	public void addRides(String userId, Ride[] rides) {
 		rideRepository.addUserRide(userId, rides);
 	}
-
 }

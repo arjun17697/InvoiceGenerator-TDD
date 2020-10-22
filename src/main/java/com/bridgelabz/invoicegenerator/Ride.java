@@ -3,11 +3,13 @@ package com.bridgelabz.invoicegenerator;
 public class Ride {
 
 	public double distance;
-	public double time;
+	public CabRide cabRideType;
+	public int timeInMinute;
 
-	public Ride(double distance, double time) {
+	public Ride(CabRide cabRideType, double distance, int timeInMinute) {
 		this.distance = distance;
-		this.time = time;
+		this.timeInMinute = timeInMinute;
+		this.cabRideType = cabRideType;
 	}
 
 }
