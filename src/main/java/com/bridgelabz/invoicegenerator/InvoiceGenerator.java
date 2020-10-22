@@ -6,7 +6,11 @@ public class InvoiceGenerator {
 	private static final double FARE_PER_MIN = 1.0;
 
 	public static double calculateFare(double distance, double time) {
-		return distance*FARE_PER_KM + time*FARE_PER_MIN;
+		double fare = distance * FARE_PER_KM + time * FARE_PER_MIN;
+		if (fare > 5)
+			return fare;
+		else
+			return 5;
 	}
 
 }
